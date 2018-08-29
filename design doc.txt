@@ -1,0 +1,41 @@
+Features:
+Per-registered account, 1 gotchi
+For a full day when first asking for a gotchi, get an egg
+Egg is one of three possible gotchis
+Each gotchi has two levels of evolution, two choices each time
+Gotchi has three public stats and two invisible stats: hunger, cleanliness, play (happiness, xp)
+Different gotchis have different stat amounts
+Each stat that is at minimum reduces happiness, if all three stats >50%, increases happiness and xp
+The closer some combination of the stats are to 100%, the faster happiness and xp increase (maybe x*y*z * some constant?)
+Happiness is made visible only through some simple textual measurement (unhappy, neutral, happy)
+XP made visible through an end-of-life level
+Gotchi can end life either through miscare or natural causes after set amount of time
+Happiness at 0% = death
+Natural causes at two weeks real time
+After death, user is given the choice to restart with a new gotchi starting at the level of the previous gotchi
+Level is inherited from last gotchi, unused xp is lost
+XP required for level (x) = x^2 * 20x + 35 or something
+
+Interaction with gotchi is limited to four commands:
+* Status: Returns quick status of gotchi, food/cleanliness/boredom (also gives age, starting level, name, and type of gotchi)
+* Feed: Gives the gotchi one unit of hunger back
+* Clean: Cleans up any poops around the gotchi
+* Play: Asks player to solve a simple math problem to "play" with the gotchi (four function, single digit operands)
+
+Stats are stored as int(current), int(max)
+Decrements over time are done by timer to next decrement, stored as millisecond time when next decrement is scheduled
+For food, one unit decrements every 2 hours
+For cleanliness, one every 3
+For play, one every 2.5
+Happiness/XP update every 30 minutes
+
+Happiness is adjusted (((x-0.5)*2)^2*((x-0.5)/abs(x-0.5)))*3 for x = each visible attribute
+XP is gained at 10*((x-0.5)*2)^2 for x = each visible attribute if all x > 0.5
+
+TODO:
+Create evolutionary tree
+Design state machine for UI
+Design class for gotchi
+Design class for user model
+Design update thread
+Synched per user or per bot?
